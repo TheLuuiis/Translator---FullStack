@@ -45,6 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         outputText.value = "Error al conectar con la API.";
         console.error(error);
       }
-    }, 300); 
+    }, 200); 
   });
 });
