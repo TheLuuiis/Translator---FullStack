@@ -1,42 +1,49 @@
 'use strict'
 // <    >  =>
-    
-import { error } from 'console';
+
 import express from 'express';
+import bodyParser from 'body-parser';
 import fetch from 'node-fetch';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = 3000;
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../public")));
-app.use(express.json());
+// Middleware para analizar el cuerpo de las solicitudes
+app.use(bodyParser.json());
 
-app.post("/api/translate", async (req, res) => {
-    const { text, source, target } = req.body;
+// Servir archivos estáticos desde la carpeta "public"
+app.use(express.static("public"));
 
-    if (!text || !source || !target) {
-        return res.status(400).json({ error: "Faltan datos" });
-    };
-
-    try {
-        const response = await fetch("https://libretranslate.com/translate", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                q: text,
-                source,
-                target,
-                format: "text",
-            }),
-        });
-    } catch (error) {
-        res.status(500).json({ error: "Error en la traducción" });
-    };
+// Ruta para servir la página principal
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/index.html");
 });
 
-app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
+// Endpoint para manejar las traducciones
+app.post("/api/translate", async (req, res) => {
+  const { text, source, target } = req.body;
 
+  if (!text || !source || !target) {
+    return res.status(400).json({ error: "Faltan datos" });
+  }
+
+  try {
+    const apiUrl = `https://lingva.ml/api/v1/${source}/${target}/${encodeURIComponent(text)}`;
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error("Error en la API de Lingva Translate");
+    }
+
+    const data = await response.json();
+    res.json({ translatedText: data.translation });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al traducir el texto." });
+  }
+});
+
+// Inicia el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});

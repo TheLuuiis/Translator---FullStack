@@ -7,17 +7,13 @@
 }
 
 body {
+    background: #536976; 
+    background: -webkit-linear-gradient(to right, #fff, #ffffff); 
+    background: linear-gradient(to right, #ffff, #fff); 
     font-family: 'Poppins', sans-serif;
 }
 
-#vanta-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; 
-}
+
 
 .container {
     width: 100%;
@@ -38,12 +34,11 @@ body {
 }
 
 .container header a {
-    color: #fff;
+    color: #5F6368;
     font-size: 29px;
     font-weight: 600;
     text-align: start;
     transition: .3s ease;
-
     text-decoration: none;
 }
 
@@ -67,7 +62,7 @@ body {
 .container header nav ul li i {
     font-size: 27px;
     cursor: pointer;
-    color: #fff;
+    color: #1a1a1a;
 }
 
 
@@ -104,7 +99,7 @@ body {
     width: 100%;
     max-width: 45%;
     height: 100%;
-    color: #2B2928;
+    color: #0866ff;
     font-size: 15px;
     font-weight: 600;
     text-align: start;
@@ -123,9 +118,6 @@ body {
 .lang-select .left {
     border-top-left-radius: .5rem;
     border-top-right-radius: .5rem;
-    box-shadow:
-        0 -1px 1px rgba(255, 255, 255, 0.2), 
-        0 -1px 1px rgba(255, 255, 255, 0.2); 
 }
 
 .lang-select .right {
@@ -138,8 +130,8 @@ body {
     border-bottom-left-radius: .5rem;
     border-bottom-right-radius: .5rem;
         box-shadow:
-        0 5px 25px rgba(255, 255, 255, 0.4),  /* brillo suave hacia abajo */
-        0 8px 20px rgba(0, 0, 0, 0.35); 
+        0 5px 25px rgba(255, 255, 255, 02), 
+        0 8px 20px rgba(0, 0, 0, 0.4); 
 }
 
 .lang-select svg {
@@ -167,7 +159,7 @@ body {
     font-size: 24px;
     font-weight: 500;
     text-align: start;
-    color: #1a1a1a;
+    color: #5F6368;
     padding: 10px 20px;
     outline: none;
     font-family: 'Poppins', sans-serif;
@@ -175,20 +167,14 @@ body {
 }
 
 ::placeholder {
-    color: #2B2928;
+    color: #5F6368;
 }
 
 .lang-select  option {
-    color: #2B2928;
+    color: #5F6368;
     font-size: 16px;
     font-weight: 500;
     text-align: start;
     border: none;
     outline: none;
-}
-
-/* Container Button */
-.container-button {
-    width: 100%;
-    height: auto;
 }

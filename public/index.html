@@ -20,7 +20,7 @@
   </head>
 
   <body>
-    <div id="vanta-bg"></div>
+
     <!-- Container -->
     <div class="container">
       <header>
@@ -54,7 +54,7 @@
               <option value="ja">Japonés</option>
               <option value="ko">Coreano</option>
             </select>
-            <svg width="24px" height="24px" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>
+            <svg width="33px" height="33px" focusable="false" fill="#5F6368" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>
             <select id="targetLang" class="right">
               <option value="es">Español</option>
               <option value="en">Inglés</option>
@@ -71,19 +71,11 @@
             <textarea class="content-left" id="inputText" placeholder="Escribe el texto aquí..."></textarea>
             <textarea class="content-left" id="outputText" placeholder="Traducción..." readonly></textarea>
           </div>
-          <div class="container-btn">
-            <button id="translateBtn">Traducir</button>
-          </div>
         </div>
-
       </main>
     </div>
 
 
-
-    <!-- Reemplaza el script de Waves por el de Birds -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script>
     <script type="module" src="./script.js"></script>
   </body>
 </html>

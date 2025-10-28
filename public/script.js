@@ -1,96 +1,53 @@
-'use strict'
-// <    >  =>
+'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const inputText = document.getElementById("inputText");
+  const outputText = document.getElementById("outputText");
+  const sourceLang = document.getElementById("sourceLang");
+  const targetLang = document.getElementById("targetLang");
 
-const translateBtn = document.getElementById("translateBtn");
+  let timeoutId;
 
-translateBtn.addEventListener("click", async () => {
-  const text = document.getElementById("inputText").value.trim();
-  const source = document.getElementById("sourceLang").value;
-  const target = document.getElementById("targetLang").value;
-  const output = document.getElementById("outputText");
+  // Detecta cambios en el campo de entrada
+  inputText.addEventListener("input", () => {
+    const text = inputText.value.trim();
+    const source = sourceLang.value;
+    const target = targetLang.value;
 
-  if (!text) {
-    output.value = "Escribe algo para traducir.";
-    return;
-  }
+    // Cancela cualquier solicitud anterior si el usuario sigue escribiendo
+    clearTimeout(timeoutId);
 
-  output.value = "raduciendo...";
+    // Espera 300ms después de que el usuario deje de escribir para enviar la solicitud
+    timeoutId = setTimeout(async () => {
+      if (!text) {
+        outputText.value = ""; // Limpia el campo de salida si no hay texto
+        return;
+      }
 
-  try {
-    const response = await fetch("/api/translate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, source, target }),
-    });
+      outputText.value = "Traduciendo...";
 
-    const data = await response.json();
+      try {
+        const response = await fetch("/api/translate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text, source, target }),
+        });
 
-    if (data.translatedText) {
-      output.value = data.translatedText;
-    } else {
-      output.value = "Error al traducir.";
-    }
-  } catch (error) {
-    output.value = "Error de conexión con el servidor.";
-  }
-});
+        if (!response.ok) {
+          throw new Error("Error en la API de traducción");
+        }
 
+        const data = await response.json();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  VANTA.BIRDS({
-    el: "#vanta-bg", 
-    mouseControls: true,
-    touchControls: true,
-    gyroControls: false,
-    minHeight: 200.00,
-    minWidth: 200.00,
-    scale: 1.00,
-    scaleMobile: 1.00,
-    backgroundColor: 0xbebeff
+        if (data.translatedText) {
+          outputText.value = data.translatedText;
+        } else {
+          outputText.value = "No se pudo obtener la traducción.";
+        }
+      } catch (error) {
+        outputText.value = "Error al conectar con la API.";
+        console.error(error);
+      }
+    }, 300); // Ajusta el tiempo de espera según sea necesario
   });
 });
