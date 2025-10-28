@@ -8,18 +8,14 @@ import fetch from 'node-fetch';
 const app = express();
 const PORT = 3000;
 
-// Middleware para analizar el cuerpo de las solicitudes
 app.use(bodyParser.json());
 
-// Servir archivos estáticos desde la carpeta "public"
 app.use(express.static("public"));
 
-// Ruta para servir la página principal
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
-// Endpoint para manejar las traducciones
 app.post("/api/translate", async (req, res) => {
   const { text, source, target } = req.body;
 
@@ -43,7 +39,6 @@ app.post("/api/translate", async (req, res) => {
   }
 });
 
-// Inicia el servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

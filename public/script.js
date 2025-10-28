@@ -8,19 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let timeoutId;
 
-  // Detecta cambios en el campo de entrada
   inputText.addEventListener("input", () => {
     const text = inputText.value.trim();
     const source = sourceLang.value;
     const target = targetLang.value;
 
-    // Cancela cualquier solicitud anterior si el usuario sigue escribiendo
     clearTimeout(timeoutId);
 
-    // Espera 300ms después de que el usuario deje de escribir para enviar la solicitud
     timeoutId = setTimeout(async () => {
       if (!text) {
-        outputText.value = ""; // Limpia el campo de salida si no hay texto
+        outputText.value = ""; 
         return;
       }
 
@@ -48,6 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         outputText.value = "Error al conectar con la API.";
         console.error(error);
       }
-    }, 300); // Ajusta el tiempo de espera según sea necesario
+    }, 300); 
   });
 });
