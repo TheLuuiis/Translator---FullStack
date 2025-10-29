@@ -115,18 +115,18 @@ document.addEventListener('DOMContentLoaded', () => {
       darkMode.style.background = '#fff';
 
       text.forEach(texts => {
-        texts.style.color = '#000';
+        texts.style.color = '#9e9e9e';
       });
 
       moon.style.display = 'block';
       sun.style.display = 'none';
-      moon.style.color = '#000';
+      moon.style.color = '#9e9e9e';
 
       icons.forEach(icon => {
-        icon.style.color = '#000';
+        icon.style.color = '#9e9e9e';
       });
 
-      arrow.style.fill = '#000';
+      arrow.style.fill = '#9e9e9e';
 
       texTarea.forEach(campus => {
         campus.style.color = '#5F6368';
@@ -136,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
           0 8px 20px rgba(0, 0, 0, 0.4)
           `;
       });
-
 
       left.forEach(textBlue => {
         textBlue.style.color = '#0866ff';
@@ -154,6 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
           opacity: 1;
         }
       `;
+
+      options.forEach(option => {
+        option.style.color = '#9e9e9e';
+        option.style.background = 'rgba(255, 255, 255, 0.9)'
+      });
     }
   }
 
