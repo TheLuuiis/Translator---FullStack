@@ -19,17 +19,16 @@
     <link rel="stylesheet" href="./style.css">
   </head>
 
-  <body>
-
+  <body class="darkMode">
     <!-- Container -->
     <div class="container">
       <header>
-        <a href="#">LinguaX</a>
+        <a href="#" class="text">LinguaX</a>
         <nav>
           <ul>
             <li>
               <div class="container-theme">
-                <i class='bx bxs-moon' style='color:#000'></i>
+                <i class='bx bxs-moon moon' style='color:#000'></i>
                 <i class='bx  bx-sun sun'  style='color:#000'></i> 
               </div>
             </li>
@@ -39,8 +38,8 @@
       <main class="main">
         <div class="container-translator">
           <div class="lang-select">
-            <select id="sourceLang" class="left">
-              <option value="auto">Detectar idioma</option>
+            <select id="sourceLang" class="left text">
+              <option value="auto" class="text">Detectar idioma</option>
               <option value="en">Inglés</option>
               <option value="es">Español</option>
               <option value="fr">Francés</option>
@@ -51,8 +50,8 @@
               <option value="ja">Japonés</option>
               <option value="ko">Coreano</option>
             </select>
-            <svg width="33px" height="33px" focusable="false" fill="#5F6368" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>
-            <select id="targetLang" class="right">
+            <svg class="arrow" width="33px" height="33px" focusable="false" fill="#5F6368" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>
+            <select id="targetLang" class="left right text">
               <option value="es">Español</option>
               <option value="en">Inglés</option>
               <option value="fr">Francés</option>
@@ -83,7 +82,7 @@
               <i class='bx bxl-instagram'></i>  
             </li>
           </div>
-          <a href="#">Luis David Gil</a>
+          <a href="#" class="text">Luis David Gil</a>
         </div>
       </footer>
     </div>
