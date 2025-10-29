@@ -57,21 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const arrow = document.querySelector('.arrow');
   const texTarea = document.querySelectorAll('.content-left');
   const left = document.querySelectorAll('.left');
-
+  const options = document.querySelectorAll('.options');
   let isDark = false;
 
   function toggleTheme() {
     isDark = !isDark;
     
     if (isDark) {
-      // 🌙 Tema oscuro
-      darkMode.style.background = '#1a1a1a';
+      darkMode.style.background = '#292929';
 
       text.forEach(texts => {
         texts.style.color = '#fff';
       });
 
-      // Quitamos y mostramos el icono 
       moon.style.display = 'none';
       sun.style.display = 'block';
       sun.style.color = '#fff';
@@ -84,11 +82,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
       texTarea.forEach(campus => {
         campus.style.color = '#fff';
-        campus.style.background = '#1a1a1a';
+        campus.style.background = '#292929';
         campus.style.boxShadow = `
             0 5px 25px rgba(0, 0, 0, 0.8),
             0 8px 20px rgba(255, 255, 255, 0.05)
           `;
+      });
+
+      options.forEach(option => {
+        option.style.color = '#fff';
+        option.style.background = 'rgba(41, 41, 41, 0.9)'
+      });
+
+      left.forEach(textBlue => {
+        textBlue.style.color = '#99c3ff';
+        textBlue.style.border = 'none'
       });
 
       let style = document.getElementById('placeholderStyle');
@@ -99,19 +107,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       style.textContent = `
         .content-left::placeholder {
-          color: #fff;
-          opacity: 0.9;
+          color: #9e9e9e;
+          opacity: 0.8;
         }
       `;
     } else {
-      // ☀️ Tema claro (revertir todos los cambios)
       darkMode.style.background = '#fff';
 
       text.forEach(texts => {
         texts.style.color = '#000';
       });
 
-      // Quitamos y mostramos el icono 
       moon.style.display = 'block';
       sun.style.display = 'none';
       moon.style.color = '#000';
@@ -144,14 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       style.textContent = `
         .content-left::placeholder {
-          color: #5F6368;
+          color: #9e9e9e;
           opacity: 1;
         }
       `;
     }
   }
 
-  // 👇 Escuchamos ambos iconos
   moon.addEventListener('click', toggleTheme);
   sun.addEventListener('click', toggleTheme);
 
