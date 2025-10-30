@@ -8,45 +8,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let timeoutId;
 
+  async function translateText(text, source, target) {
+    if (!text) {
+      outputText.value = "";
+      return;
+    }
+
+    outputText.value = "Traduciendo...";
+    try {
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, source, target }),
+      });
+
+      if (!response.ok) throw new Error("Error en la API de traducción");
+
+      const data = await response.json();
+      outputText.value = data.translatedText || "No se pudo obtener la traducción.";
+    } catch (err) {
+      outputText.value = "Error al conectar con la API.";
+      console.error(err);
+    }
+  }
+
   inputText.addEventListener("input", () => {
     const text = inputText.value.trim();
     const source = sourceLang.value;
     const target = targetLang.value;
 
     clearTimeout(timeoutId);
-
-    timeoutId = setTimeout(async () => {
-      if (!text) {
-        outputText.value = ""; 
-        return;
-      }
-
-      outputText.value = "Traduciendo...";
-
-      try {
-        const response = await fetch("/api/translate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ text, source, target }),
-        });
-
-        if (!response.ok) {
-          throw new Error("Error en la API de traducción");
-        }
-
-        const data = await response.json();
-
-        if (data.translatedText) {
-          outputText.value = data.translatedText;
-        } else {
-          outputText.value = "No se pudo obtener la traducción.";
-        }
-      } catch (error) {
-        outputText.value = "Error al conectar con la API.";
-        console.error(error);
-      }
-    }, 200); 
+    timeoutId = setTimeout(() => {
+      translateText(text, source, target);
+    }, 100);
   });
+
+swapLangs.addEventListener("click", () => {
+  const temp = sourceLang.value;
+  sourceLang.value = targetLang.value;
+  targetLang.value = temp;
+
+  
+  const text = outputText.value.trim(); 
+  if (text) {
+    translateText(text, sourceLang.value, targetLang.value).then(() => {
+      inputText.value = text;
+    });
+  }
+});
 
   /* Dark - Theme */
   const darkMode = document.querySelector('.darkMode');
@@ -58,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const texTarea = document.querySelectorAll('.content-left');
   const left = document.querySelectorAll('.left');
   const options = document.querySelectorAll('.options');
+  const microfone = document.querySelector('.microfone');
+
   let isDark = false;
 
   function toggleTheme() {
@@ -79,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
       arrow.style.fill = '#fff';
+
+      microfone.style.fill = '#fff';
 
       texTarea.forEach(campus => {
         campus.style.color = '#fff';
@@ -119,14 +132,16 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       moon.style.display = 'block';
+      moon.style.color = '#1a1a1a';
       sun.style.display = 'none';
-      moon.style.color = '#9e9e9e';
 
       icons.forEach(icon => {
         icon.style.color = '#9e9e9e';
       });
 
       arrow.style.fill = '#9e9e9e';
+
+      microfone.style.fill = '#9e9e9e';
 
       texTarea.forEach(campus => {
         campus.style.color = '#5F6368';
@@ -163,5 +178,87 @@ document.addEventListener('DOMContentLoaded', () => {
 
   moon.addEventListener('click', toggleTheme);
   sun.addEventListener('click', toggleTheme);
+
+  if (!microfone) return; 
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    microfone.style.display = 'none';
+    console.warn('SpeechRecognition no soportado en este navegador.');
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+  recognition.continuous = true;
+  recognition.lang = 'es-ES'; 
+
+  let listening = false;
+
+  function updateMicUI(listening) {
+    if (listening) {
+      microfone.style.fill = '#ff4b4b';
+      microfone.classList.add('listening');
+    } else {
+      microfone.style.fill = isDark ? '#fff' : '#9e9e9e';
+      microfone.classList.remove('listening');
+    }
+  }
+
+  microfone.addEventListener('click', () => {
+    const src = sourceLang.value;
+    if (src && src !== 'auto') {
+      const map = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', pt: 'pt-PT', ru: 'ru-RU', ja: 'ja-JP', ko: 'ko-KR', zh: 'zh-CN' };
+      recognition.lang = map[src] || src;
+    }
+
+    if (listening) {
+      recognition.stop();
+    } else {
+      try {
+        recognition.start();
+      } catch (err) {
+        console.error('Error al iniciar reconocimiento:', err);
+      }
+    }
+  });
+
+  recognition.onstart = () => {
+    listening = true;
+    updateMicUI(true);
+  };
+
+  recognition.onend = () => {
+    listening = false;
+    updateMicUI(false);
+  };
+
+  recognition.onerror = (event) => {
+    console.error('SpeechRecognition error', event);
+    listening = false;
+    updateMicUI(false);
+  };
+
+  recognition.onresult = (event) => {
+    let interim = '';
+    let final = '';
+
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const result = event.results[i];
+      const transcript = result[0].transcript;
+      if (result.isFinal) final += transcript;
+      else interim += transcript;
+    }
+
+    const shown = (final || interim).trim();
+    inputText.value = shown;
+
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      const source = sourceLang.value;
+      const target = targetLang.value;
+      translateText(shown, source, target);
+    }, 100);
+  };
 
 });

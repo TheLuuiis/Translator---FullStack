@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" href="./img/favicon.svg" type="image/x-icon" />
+    <link rel="shortcut icon" href="./img/favicon-traducir.png" type="image/x-icon" />
     <!-- LIBRERÍAS -->
     <link
       rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"/>
@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;700&display=swap" rel="stylesheet"/>
-    <title>Translator</title>
+    <title>Translator - LinguaX</title>
     <link rel="stylesheet" href="./style.css">
   </head>
 
@@ -28,8 +28,8 @@
           <ul>
             <li>
               <div class="container-theme">
-                <i class='bx bxs-moon moon' style='color:#000'></i>
-                <i class='bx  bx-sun sun'  style='color:#000'></i> 
+                <i class='bx bxs-moon moon' style='color:#1a1a1a'></i>
+                <i class='bx  bx-sun sun'  style='color:#1a1a1a'></i> 
               </div>
             </li>
           </ul>
@@ -50,7 +50,7 @@
               <option value="ja" class="options">Japonés</option>
               <option value="ko" class="options">Coreano</option>
             </select>
-            <svg class="arrow" width="33px" height="33px" focusable="false" fill="#5F6368" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>
+            <svg id="swapLangs" class="arrow" width="33px" height="33px" focusable="false" fill="#5F6368" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.99 11L3 15l3.99 4v-3H14v-2H6.99v-3zM21 9l-3.99-4v3H10v2h7.01v3L21 9z"></path></svg>
             <select id="targetLang" class="left right text">
               <option value="es" class="options">Español</option>
               <option value="en" class="options">Inglés</option>
@@ -64,8 +64,13 @@
             </select>
           </div>
           <div class="container-info">  
-            <textarea class="content-left" id="inputText" placeholder="Escribe el texto aquí..."></textarea>
-            <textarea class="content-left" id="outputText" placeholder="Traducción..." readonly></textarea>
+            <div class="container-traduction">
+              <textarea class="content-left" id="inputText" placeholder="Escribe o habla"></textarea>
+              <svg class="microfone" focusable="false" aria-hidden="true" fill="#9e9e9e" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path></svg>
+            </div>
+            <div class="container-traduction">
+              <textarea class="content-left" id="outputText" placeholder="Traducción" readonly></textarea>
+            </div>
           </div>
         </div>
       </main>
